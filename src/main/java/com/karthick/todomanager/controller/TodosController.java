@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 public class TodosController {
     @Autowired
@@ -16,11 +16,6 @@ public class TodosController {
     @GetMapping("/todos")
     public List<Todo> getTodos() {
         return todoRepo.findAll();
-    }
-
-    @GetMapping("/todo/{id}")
-    public Optional<Todo> getTodoById(@PathVariable("id") int id) {
-        return todoRepo.findById(id);
     }
 
     @PostMapping("/todo")
