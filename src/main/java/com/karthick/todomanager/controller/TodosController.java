@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class TodoController {
+public class TodosController {
     @Autowired
     TodoRepo todoRepo;
 
