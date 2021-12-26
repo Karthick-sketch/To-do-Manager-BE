@@ -13,10 +13,9 @@ public class TodoController {
     @Autowired
     TodoRepo todoRepo;
 
-    @PostMapping("/todo")
-    public Todo createTodo(@RequestBody Todo todo) {
-        todoRepo.save(todo);
-        return todo;
+    @GetMapping("/todos")
+    public List<Todo> getTodos() {
+        return todoRepo.findAll();
     }
 
     @GetMapping("/todo/{id}")
@@ -24,17 +23,17 @@ public class TodoController {
         return todoRepo.findById(id);
     }
 
-    @GetMapping("/todos")
-    public List<Todo> getTodos() {
-        return todoRepo.findAll();
+    @PostMapping("/todo")
+    public Todo createTodo(@RequestBody Todo todo) {
+        todoRepo.save(todo);
+        return todo;
     }
 
     @PatchMapping("/todo/{id}")
-    public boolean markAsCompleted(@PathVariable("id") int id) {
+    public boolean markTodoAsCompleted(@PathVariable("id") int id) {
         Todo todo = todoRepo.getById(id);
         todo.setCompleted(!todo.isCompleted());
         todoRepo.save(todo);
-        System.out.println(todo.toString());
         return todo.isCompleted();
     }
 
