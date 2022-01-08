@@ -18,6 +18,11 @@ public class TodosController {
         return todoRepo.findAll();
     }
 
+    @GetMapping("/todos/{user_id}")
+    public List<Todo> getTodos(@PathVariable("user_id") int user_id) {
+        return todoRepo.findByUserId(user_id);
+    }
+
     @PostMapping("/todo")
     public Todo createTodo(@RequestBody Todo todo) {
         todoRepo.save(todo);

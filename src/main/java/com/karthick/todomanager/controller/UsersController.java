@@ -20,8 +20,13 @@ public class UsersController {
     }
 
     @GetMapping("/user/{id}")
-    public Optional<User> getUser(@PathVariable("id") int id) {
+    public Optional<User> getUserById(@PathVariable("id") int id) {
         return userRepo.findById(id);
+    }
+
+    @GetMapping("/user/signin/{email}")
+    public Optional<User> getUserByEmail(@PathVariable("email") String email) {
+        return userRepo.findByEmail(email);
     }
 
     @PostMapping("/user")
