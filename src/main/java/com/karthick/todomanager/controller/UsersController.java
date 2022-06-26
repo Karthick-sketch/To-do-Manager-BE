@@ -1,6 +1,6 @@
 package com.karthick.todomanager.controller;
 
-import com.karthick.todomanager.datarepo.UserRepo;
+import com.karthick.todomanager.datarepo.UserRepository;
 import com.karthick.todomanager.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 public class UsersController {
     @Autowired
-    UserRepo userRepo;
+    private UserRepository userRepo;
 
     @GetMapping("/users")
     public List<User> getUsers() {

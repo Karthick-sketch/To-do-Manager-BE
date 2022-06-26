@@ -1,7 +1,9 @@
 package com.karthick.todomanager.controller;
 
-import com.karthick.todomanager.datarepo.TodoRepo;
+import com.karthick.todomanager.datarepo.TodoRepository;
+import com.karthick.todomanager.dto.TodoDto;
 import com.karthick.todomanager.model.Todo;
+import com.karthick.todomanager.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,16 +13,14 @@ import java.util.List;
 @RestController
 public class TodosController {
     @Autowired
-    TodoRepo todoRepo;
+    private TodoRepository todoRepo;
 
-    @GetMapping("/todos")
-    public List<Todo> getTodos() {
-        return todoRepo.findAll();
-    }
+    @Autowired
+    private TodoService todoService;
 
     @GetMapping("/todos/{user_id}")
-    public List<Todo> getTodos(@PathVariable("user_id") int user_id) {
-        return todoRepo.findByUserId(user_id);
+    public List<TodoDto> getTodosByUserId(@PathVariable("user_id") int user_id) {
+        return todoService.getTodosByUserId(user_id);
     }
 
     @PostMapping("/todo")
@@ -38,12 +38,12 @@ public class TodosController {
     }
 
     @DeleteMapping("/todo/{id}")
-    public String deleteTodo(@PathVariable("id") int id) {
+    public boolean deleteTodoById(@PathVariable("id") int id) {
         Todo todo = todoRepo.findById(id).orElse(null);
         if (todo != null) {
             todoRepo.delete(todo);
-            return "deleted";
+            return true;
         }
-        return "record is not exists";
+        return false;
     }
 }

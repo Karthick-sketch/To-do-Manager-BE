@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/todo_manager
     username: root
-    password: g0j-rHy-t)T-x%o
+    password:
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
