@@ -1,6 +1,6 @@
 package com.karthick.todomanager.controller;
 
-import com.karthick.todomanager.datarepo.TodoRepository;
+import com.karthick.todomanager.datarepository.TodoRepository;
 import com.karthick.todomanager.dto.TodoDto;
 import com.karthick.todomanager.model.Todo;
 import com.karthick.todomanager.service.TodoService;

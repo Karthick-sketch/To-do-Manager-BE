@@ -1,4 +1,4 @@
-package com.karthick.todomanager.datarepo;
+package com.karthick.todomanager.datarepository;
 
 import com.karthick.todomanager.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

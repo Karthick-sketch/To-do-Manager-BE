@@ -1,37 +1,41 @@
 package com.karthick.todomanager.controller;
 
-import com.karthick.todomanager.datarepo.UserRepository;
+import com.karthick.todomanager.datarepository.UserRepository;
+import com.karthick.todomanager.dto.UserDto;
 import com.karthick.todomanager.model.User;
+import com.karthick.todomanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 public class UsersController {
     @Autowired
-    private UserRepository userRepo;
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/users")
     public List<User> getUsers() {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 
     @GetMapping("/user/{id}")
-    public Optional<User> getUserById(@PathVariable("id") int id) {
-        return userRepo.findById(id);
+    public UserDto getUserById(@PathVariable("id") int id) {
+        return userService.getUserById(id);
     }
 
     @GetMapping("/user/signin/{email}")
-    public Optional<User> getUserByEmail(@PathVariable("email") String email) {
-        return userRepo.findByEmail(email);
+    public UserDto getUserByEmail(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
     }
 
     @PostMapping("/user")
     public User createUser(@RequestBody User user) {
-        userRepo.save(user);
+        userRepository.save(user);
         return user;
     }
 }
