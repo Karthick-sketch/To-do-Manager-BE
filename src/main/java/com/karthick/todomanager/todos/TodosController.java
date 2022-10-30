@@ -1,9 +1,5 @@
-package com.karthick.todomanager.controller;
+package com.karthick.todomanager.todos;
 
-import com.karthick.todomanager.datarepository.TodoRepository;
-import com.karthick.todomanager.dto.TodoDto;
-import com.karthick.todomanager.model.Todo;
-import com.karthick.todomanager.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

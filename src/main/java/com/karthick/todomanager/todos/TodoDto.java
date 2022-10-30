@@ -1,4 +1,4 @@
-package com.karthick.todomanager.dto;
+package com.karthick.todomanager.todos;
 
 public class TodoDto {
     private int id;

@@ -1,8 +1,5 @@
-package com.karthick.todomanager.service;
+package com.karthick.todomanager.users;
 
-import com.karthick.todomanager.datarepository.UserRepository;
-import com.karthick.todomanager.dto.UserDto;
-import com.karthick.todomanager.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

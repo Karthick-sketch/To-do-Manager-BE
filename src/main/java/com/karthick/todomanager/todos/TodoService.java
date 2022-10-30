@@ -1,8 +1,5 @@
-package com.karthick.todomanager.service;
+package com.karthick.todomanager.todos;
 
-import com.karthick.todomanager.datarepository.TodoRepository;
-import com.karthick.todomanager.dto.TodoDto;
-import com.karthick.todomanager.model.Todo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

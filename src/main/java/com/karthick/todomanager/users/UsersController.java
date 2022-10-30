@@ -1,9 +1,5 @@
-package com.karthick.todomanager.controller;
+package com.karthick.todomanager.users;
 
-import com.karthick.todomanager.datarepository.UserRepository;
-import com.karthick.todomanager.dto.UserDto;
-import com.karthick.todomanager.model.User;
-import com.karthick.todomanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
