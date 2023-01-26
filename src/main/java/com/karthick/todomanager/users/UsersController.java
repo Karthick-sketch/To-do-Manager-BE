@@ -1,6 +1,11 @@
 package com.karthick.todomanager.users;
 
+import com.karthick.todomanager.common.APIResponse;
+import com.karthick.todomanager.users.dto.LoginRequestDto;
+import com.karthick.todomanager.users.dto.SignUpRequestDto;
+import com.karthick.todomanager.users.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +19,9 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LoginService loginService;
+
     @GetMapping("/users")
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -24,14 +32,19 @@ public class UsersController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/user/signin/{email}")
-    public UserDto getUserByEmail(@PathVariable("email") String email) {
-        return userService.getUserByEmail(email);
+    @PostMapping("/signup")
+    public ResponseEntity<APIResponse> signup(@RequestBody SignUpRequestDto signUpRequestDto) {
+        APIResponse apiResponse = loginService.signup(signUpRequestDto);
+        return ResponseEntity
+                .status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
-    @PostMapping("/user")
-    public User createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return user;
+    @GetMapping("/login")
+    public ResponseEntity<APIResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
+        APIResponse apiResponse = loginService.login(loginRequestDto);
+        return ResponseEntity
+                .status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 }
