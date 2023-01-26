@@ -1,5 +1,7 @@
 package com.karthick.todomanager.todos;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +16,21 @@ public class TodosController {
     @Autowired
     private TodoService todoService;
 
+    Logger logger = LoggerFactory.getLogger(TodosController.class);
+
     @GetMapping("/todos/{user_id}")
     public List<TodoDto> getTodosByUserId(@PathVariable("user_id") int user_id) {
-        return todoService.getTodosByUserId(user_id);
+        List<TodoDto> user = todoService.getTodosByUserId(user_id);
+        if(user.isEmpty()) {
+            logger.error("user_id:" + user_id + " is not found");
+        }
+        return user;
     }
 
     @PostMapping("/todo")
     public Todo createTodo(@RequestBody Todo todo) {
         todoRepo.save(todo);
+        logger.info("Creating a new todo");
         return todo;
     }
 
@@ -30,6 +39,7 @@ public class TodosController {
         Todo todo = todoRepo.getById(id);
         todo.setCompleted(!todo.isCompleted());
         todoRepo.save(todo);
+        logger.warn("Updating the todo information");
         return todo.isCompleted();
     }
 
@@ -37,6 +47,7 @@ public class TodosController {
     public boolean deleteTodoById(@PathVariable("id") int id) {
         Todo todo = todoRepo.findById(id).orElse(null);
         if (todo != null) {
+            logger.warn("Deleting the todo information");
             todoRepo.delete(todo);
             return true;
         }
