@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler
@@ -13,6 +15,16 @@ public class GlobalExceptionHandler {
 
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         apiResponse.setError(ade.getMessage());
+
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<APIResponse> handleElementNotFoundException(NoSuchElementException nsee) {
+        APIResponse apiResponse = new APIResponse();
+
+        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        apiResponse.setError(nsee.getMessage());
 
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }

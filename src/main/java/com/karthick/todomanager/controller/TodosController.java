@@ -36,14 +36,14 @@ public class TodosController {
 
     @PostMapping("/todo")
     public ResponseEntity<APIResponse> createTodo(@RequestBody Todo todo) {
-        APIResponse apiResponse = todoService.createTodo(todo);
+        APIResponse apiResponse = todoService.createTodo(todo, requestMetaDto.getId());
         logger.info("Creating a new todo");
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PatchMapping("/todo/{id}")
     public ResponseEntity<APIResponse> updateTodoById(@PathVariable("id") int id) {
-        APIResponse apiResponse = todoService.markTodoAsCompleted(id);
+        APIResponse apiResponse = todoService.markTodoAsCompleted(id, requestMetaDto.getId());
         logger.warn("Updating the todo information");
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
@@ -51,6 +51,6 @@ public class TodosController {
     @DeleteMapping("/todo/{id}")
     public boolean deleteTodoById(@PathVariable("id") int id) {
         logger.warn("Deleting the todo information");
-        return todoService.deleteTodoById(id);
+        return todoService.deleteTodoById(id, requestMetaDto.getId());
     }
 }
