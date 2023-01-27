@@ -1,8 +1,10 @@
-package com.karthick.todomanager.users;
+package com.karthick.todomanager.service;
 
 import com.karthick.todomanager.common.APIResponse;
-import com.karthick.todomanager.users.dto.LoginRequestDto;
-import com.karthick.todomanager.users.dto.SignUpRequestDto;
+import com.karthick.todomanager.dto.LoginRequestDto;
+import com.karthick.todomanager.dto.SignUpRequestDto;
+import com.karthick.todomanager.entity.User;
+import com.karthick.todomanager.repository.UserRepository;
 import com.karthick.todomanager.util.JWTUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class LoginService {
     @Autowired
     private JWTUtils jwtUtils;
 
+    private final long expiryDuration = 120000L;
+
     private User convertDtoToEntity(SignUpRequestDto signUpRequestDto) {
         return (new ModelMapper()).map(signUpRequestDto, User.class);
     }
@@ -38,7 +42,7 @@ public class LoginService {
 
         Map<String, Object> data = new HashMap<>();
         data.put("access_token", token);
-        data.put("expires_in", 30000L);
+        data.put("expires_in", expiryDuration);
 
         APIResponse apiResponse = new APIResponse();
         apiResponse.setData(data);
@@ -59,7 +63,7 @@ public class LoginService {
 
         Map<String, Object> data = new HashMap<>();
         data.put("access_token", token);
-        data.put("expires_in", 30000L);
+        data.put("expires_in", expiryDuration);
 
         apiResponse.setData(data);
 

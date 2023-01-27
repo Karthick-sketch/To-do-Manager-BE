@@ -1,9 +1,17 @@
-package com.karthick.todomanager.users.dto;
+package com.karthick.todomanager.dto;
 
-public class SignUpRequestDto {
+public class RequestMetaDto {
+    private int id;
     private String name;
     private String email;
-    private String password;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -19,13 +27,5 @@ public class SignUpRequestDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

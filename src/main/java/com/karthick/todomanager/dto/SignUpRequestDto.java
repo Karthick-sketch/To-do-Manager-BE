@@ -1,8 +1,17 @@
-package com.karthick.todomanager.users.dto;
+package com.karthick.todomanager.dto;
 
-public class LoginRequestDto {
+public class SignUpRequestDto {
+    private String name;
     private String email;
     private String password;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;

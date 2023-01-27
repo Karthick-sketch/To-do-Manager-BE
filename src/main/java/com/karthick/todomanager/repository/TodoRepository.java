@@ -1,5 +1,6 @@
-package com.karthick.todomanager.todos;
+package com.karthick.todomanager.repository;
 
+import com.karthick.todomanager.entity.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

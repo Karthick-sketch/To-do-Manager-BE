@@ -1,5 +1,6 @@
-package com.karthick.todomanager.users;
+package com.karthick.todomanager.repository;
 
+import com.karthick.todomanager.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {

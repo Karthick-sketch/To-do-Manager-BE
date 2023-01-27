@@ -1,6 +1,7 @@
 package com.karthick.todomanager.util;
 
-import com.karthick.todomanager.users.User;
+import com.karthick.todomanager.common.AccessDeniedException;
+import com.karthick.todomanager.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,10 +11,10 @@ import java.util.Date;
 
 @Component
 public class JWTUtils {
-    private static String secretKey = "This-is-the-secret-key";
+    private final String secretKey = "This-is-the-secret-key";
 
     public String generateJWT(User user) {
-        long expiryDuration = System.currentTimeMillis() + 30000L;
+        long expiryDuration = System.currentTimeMillis() + 120000L;
 
         Date date = new Date();
         Date expiryAt = new Date(expiryDuration);
@@ -27,5 +28,13 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .setClaims(claims)
                 .compact();
+    }
+
+    public Claims validateJWT(String auth) {
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(auth).getBody();
+        } catch (RuntimeException re) {
+            throw new AccessDeniedException("Access denied");
+        }
     }
 }

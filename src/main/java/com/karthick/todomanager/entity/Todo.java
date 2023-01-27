@@ -1,4 +1,4 @@
-package com.karthick.todomanager.todos;
+package com.karthick.todomanager.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
