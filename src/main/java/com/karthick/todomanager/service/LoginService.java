@@ -1,18 +1,19 @@
 package com.karthick.todomanager.service;
 
 import com.karthick.todomanager.common.APIResponse;
+import com.karthick.todomanager.common.BadRequestException;
+import com.karthick.todomanager.dto.ErrorDto;
 import com.karthick.todomanager.dto.LoginRequestDto;
 import com.karthick.todomanager.dto.SignUpRequestDto;
 import com.karthick.todomanager.entity.User;
 import com.karthick.todomanager.repository.UserRepository;
 import com.karthick.todomanager.util.JWTUtils;
+import com.karthick.todomanager.validate.LoginValidation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +23,9 @@ public class LoginService {
 
     @Autowired
     private JWTUtils jwtUtils;
+
+    @Autowired
+    private LoginValidation loginValidation;
 
     private final long expiryDuration = 120000L;
 
@@ -35,6 +39,11 @@ public class LoginService {
     }
 
     public APIResponse signup(SignUpRequestDto signUpRequestDto) {
+        List<ErrorDto> errors = loginValidation.validateSignup(signUpRequestDto);
+        if (errors.size() > 0) {
+            throw new BadRequestException("bad request", errors);
+        }
+
         User user = getUserFromUserDto(signUpRequestDto);
         userRepository.save(user);
 
@@ -51,12 +60,16 @@ public class LoginService {
     }
 
     public APIResponse login(LoginRequestDto loginRequestDto) {
+        List<ErrorDto> errors = loginValidation.validateLogin(loginRequestDto);
+        if (errors.size() > 0) {
+            throw new BadRequestException("bad request", errors);
+        }
+
         User user = userRepository.findByEmailAndPassword(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
         APIResponse apiResponse = new APIResponse();
         if (user == null) {
-            apiResponse.setData("user login failed");
-            return apiResponse;
+            throw new NoSuchElementException("email or password is invalid");
         }
 
         String token = jwtUtils.generateJWT(user);
